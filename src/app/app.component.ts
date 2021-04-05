@@ -11,6 +11,7 @@ export class AppComponent implements OnInit{
   constructor( private ls:LoginService) { }
 
   ngOnInit(): void {
-    this.ls.checkIfUserLogin()
+    //  this.ls.checkIfUserLogin()
+    // this.ls.checkIfUserLoginV2()
   }
 }

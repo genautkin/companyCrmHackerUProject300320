@@ -12,9 +12,15 @@ import { environment } from 'src/environments/environment';
 import { AngularFireAuthModule} from '@angular/fire/auth';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { AuthGuard } from './guards/auth-guard';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MyformComponent } from './test/myform/myform.component';
+import { ReactMyFormComponent } from './test/react-my-form/react-my-form.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
+  { path: 'form', component: MyformComponent },
+  { path: 'reactForm', component: ReactMyFormComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
 ];
 
@@ -25,13 +31,18 @@ const routes: Routes = [
     NavBarComponent,
     SideBarComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    MyformComponent,
+    ReactMyFormComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+   
   ],
   exports: [RouterModule],
   providers: [AuthGuard],

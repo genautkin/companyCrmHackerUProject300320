@@ -18,7 +18,7 @@ export class LoginService {
     return new Promise(async (resolve, reject) => {
       this.auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-       
+        this.router.navigate(['dashboard'], { relativeTo: this.route });
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -38,21 +38,43 @@ export class LoginService {
    
   }
 
-  checkIfUserLogin(){
-    this.auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log(user)
-        this.user=user
-        this.router.navigate(['dashboard'], { relativeTo: this.route });
-      } else {
-        this.user=null
-        this.router.navigate(['login'], { relativeTo: this.route });
-      }
-    });
+  checkIfUserLogin():Promise<boolean>{
+    return new Promise(async (resolve, reject) => {
+            if (this.user) {
+              resolve(true)
+              return
+            }
+            this.auth.onAuthStateChanged((user) => {
+              if (user) {
+                console.log(user)
+                this.user=user
+                resolve(true)
+              } else {
+                this.user=null
+                this.router.navigate(['login'], { relativeTo: this.route });
+                resolve(false)
+              }
+            });
+    })
+    
 
     
     
   }
+
+  // checkIfUserLoginV2(){
+  //   var user = this.auth.currentUser;
+
+  //   if (user) {
+  //     console.log(user)
+  //   } else {
+  //     // No user is signed in.
+  //     console.log("No user")
+  //   }
+
+  // }
+
+
 
   logOut(){
     this.auth.signOut()

@@ -1,13 +1,16 @@
 import { Injectable } from "@angular/core";
 import { CanActivate } from "@angular/router";
+import { LoginService } from "../services/login.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor() {}
+  constructor(private ls: LoginService) {}
 
-  canActivate(
+  async canActivate(
     
-  ): boolean {
-    return true
+  ): Promise<boolean> {
+     const status=await this.ls.checkIfUserLogin()
+     return status;
+    
   }
 }
