@@ -15,13 +15,16 @@ import { AuthGuard } from './guards/auth-guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyformComponent } from './test/myform/myform.component';
 import { ReactMyFormComponent } from './test/react-my-form/react-my-form.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { PlayWithFirebaseComponent } from './test/play-with-firebase/play-with-firebase.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'form', component: MyformComponent },
   { path: 'reactForm', component: ReactMyFormComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'playFB', component: PlayWithFirebaseComponent,canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -33,7 +36,8 @@ const routes: Routes = [
     LoginComponent,
     DashboardComponent,
     MyformComponent,
-    ReactMyFormComponent
+    ReactMyFormComponent,
+    PlayWithFirebaseComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     RouterModule.forRoot(routes),
+    AngularFirestoreModule
    
   ],
   exports: [RouterModule],
