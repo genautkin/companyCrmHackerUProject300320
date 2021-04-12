@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
@@ -6,37 +6,59 @@ import { AngularFirestore } from '@angular/fire/firestore';
   templateUrl: './play-with-firebase.component.html',
   styleUrls: ['./play-with-firebase.component.css']
 })
-export class PlayWithFirebaseComponent implements OnInit {
+export class PlayWithFirebaseComponent implements OnInit,OnDestroy {
 
+  subscribeCities:any
   constructor(private db: AngularFirestore) { }
+  
+  ngOnDestroy(): void {
+   this.subscribeCities()
+  }
 
   ngOnInit(): void {
     // this.setDataToFirebase()
+    this.getUpdateFromCollection()
+  }
+
+  getUpdateFromCollection(){
+    var cities = [];
+    this.subscribeCities=this.db.firestore.collection("cities").where("state", "==", "CA")
+    .onSnapshot((querySnapshot) => {
+     
+        querySnapshot.forEach((doc) => {
+            cities.push(doc.data().name);
+        });
+        console.log("Current cities in CA: "+new Date().getTime(), cities.join(", "));
+    });
   }
 
   setDataToFirebase(): void {
     var citiesRef = this.db.collection("cities");
 
-    citiesRef.doc("SF").set({
-        name: "San Francisco", state: "CA", country: "USA",
-        capital: false, population: 860000,
-        regions: ["west_coast", "norcal"] });
-    citiesRef.doc("LA").set({
-        name: "Los Angeles", state: "CA", country: "USA",
-        capital: false, population: 3900000,
-        regions: ["west_coast", "socal"] });
-    citiesRef.doc("DC").set({
-        name: "Washington, D.C.", state: null, country: "USA",
-        capital: true, population: 680000,
-        regions: ["east_coast"] });
-    citiesRef.doc("TOK").set({
-        name: "Tokyo", state: null, country: "Japan",
-        capital: true, population: 9000000,
-        regions: ["kanto", "honshu"] });
-    citiesRef.doc("BJ").set({
-        name: "Beijing", state: null, country: "China",
-        capital: true, population: 21500000,
-        regions: ["jingjinji", "hebei"] });
+    // citiesRef.doc("SF").set({
+    //     name: "San Francisco", state: "CA", country: "USA",
+    //     capital: false, population: 860000,
+    //     regions: ["west_coast", "norcal"] });
+    citiesRef.doc().set({
+          name: "San Francisco2", state: "CA", country: "USA",
+          capital: false, population: 860000,
+          regions: ["west_coast", "norcal"] });
+    // citiesRef.doc("LA").set({
+    //     name: "Los Angeles", state: "CA", country: "USA",
+    //     capital: false, population: 3900000,
+    //     regions: ["west_coast", "socal"] });
+    // citiesRef.doc("DC").set({
+    //     name: "Washington, D.C.", state: null, country: "USA",
+    //     capital: true, population: 680000,
+    //     regions: ["east_coast"] });
+    // citiesRef.doc("TOK").set({
+    //     name: "Tokyo", state: null, country: "Japan",
+    //     capital: true, population: 9000000,
+    //     regions: ["kanto", "honshu"] });
+    // citiesRef.doc("BJ").set({
+    //     name: "Beijing", state: null, country: "China",
+    //     capital: true, population: 21500000,
+    //     regions: ["jingjinji", "hebei"] });
 
 }
 
@@ -61,9 +83,10 @@ updateDataToFirebase(){
 getDataToFirebase(){
 
 
-  this.db.firestore.collection("cities").where("state", "==", "CA").where("population", "<", 100000)
+  this.db.firestore.collection("cities").where("state", "==", "CA").where("population", "<", 8600000)
     .get()
     .then((querySnapshot) => {
+        console.log(querySnapshot)
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
@@ -72,7 +95,6 @@ getDataToFirebase(){
     .catch((error) => {
         console.log("Error getting documents: ", error);
     });
-
 
 
 //   const users= this.db.firestore.collection("users")

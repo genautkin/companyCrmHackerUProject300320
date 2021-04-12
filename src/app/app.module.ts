@@ -17,13 +17,25 @@ import { MyformComponent } from './test/myform/myform.component';
 import { ReactMyFormComponent } from './test/react-my-form/react-my-form.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { PlayWithFirebaseComponent } from './test/play-with-firebase/play-with-firebase.component';
+import { AddcustomerComponent } from './dashboard/addcustomer/addcustomer.component';
+import { SpinnerComponent } from './main-components/spinner/spinner.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'form', component: MyformComponent },
   { path: 'reactForm', component: ReactMyFormComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard],
+      children: [
+        {
+          path: 'addCustomer', // child route path
+          component: AddcustomerComponent, // child route component that the router renders
+        },
+        // {
+        //   path: 'child-b',
+        //   component: ChildBComponent, // another child route component that the router renders
+        // },
+      ], },
   { path: 'playFB', component: PlayWithFirebaseComponent,canActivate: [AuthGuard] }
 ];
 
@@ -37,7 +49,9 @@ const routes: Routes = [
     DashboardComponent,
     MyformComponent,
     ReactMyFormComponent,
-    PlayWithFirebaseComponent
+    PlayWithFirebaseComponent,
+    AddcustomerComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
