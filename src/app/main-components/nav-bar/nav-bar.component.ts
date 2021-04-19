@@ -10,7 +10,14 @@ export class NavBarComponent implements OnInit {
 
   constructor(private ls:LoginService) { }
 
+  email: string=''
   ngOnInit(): void {
+    this.getUserInfo()
+  }
+
+  getUserInfo(){
+    this.email=this.ls.getUserEmail()
+    
   }
 
   logOut(){
