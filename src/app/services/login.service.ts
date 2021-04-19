@@ -75,6 +75,12 @@ export class LoginService {
   // }
 
 
+  getUserEmail(){
+    if ( this.user && this.user.email){
+      return this.user.email
+    }
+    return ''
+  }
 
   logOut(){
     this.auth.signOut()

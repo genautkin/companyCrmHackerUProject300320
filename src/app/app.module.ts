@@ -19,6 +19,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { PlayWithFirebaseComponent } from './test/play-with-firebase/play-with-firebase.component';
 import { AddcustomerComponent } from './dashboard/addcustomer/addcustomer.component';
 import { SpinnerComponent } from './main-components/alertsAndSpinners/spinner/spinner.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CustomersComponent } from './dashboard/customers/customers.component';
+import { CommonModule } from '@angular/common';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
@@ -31,10 +35,10 @@ const routes: Routes = [
           path: 'addCustomer', // child route path
           component: AddcustomerComponent, // child route component that the router renders
         },
-        // {
-        //   path: 'child-b',
-        //   component: ChildBComponent, // another child route component that the router renders
-        // },
+        {
+          path: 'customers',
+          component: CustomersComponent, // another child route component that the router renders
+        },
       ], },
   { path: 'playFB', component: PlayWithFirebaseComponent,canActivate: [AuthGuard] }
 ];
@@ -51,16 +55,19 @@ const routes: Routes = [
     ReactMyFormComponent,
     PlayWithFirebaseComponent,
     AddcustomerComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    CustomersComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     RouterModule.forRoot(routes),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgbModule
    
   ],
   exports: [RouterModule],
