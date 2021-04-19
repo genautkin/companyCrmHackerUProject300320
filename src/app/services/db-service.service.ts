@@ -12,12 +12,7 @@ export class DbServiceService {
   addCustomer(customer: Customer){
     const docRef=this.db.firestore.collection("customers").doc()
     customer.id=docRef.id
-    docRef.set(customer.toFirestore(),{merge: true})
-  .then((docRef) => {
-      console.log("Document written with ID: ", docRef);
-  })
-  .catch((error) => {
-      console.error("Error adding document: ", error);
-  });
+    return docRef.set(customer.toFirestore(),{merge: true})
+  
   }
 }

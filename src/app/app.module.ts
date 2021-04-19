@@ -18,7 +18,7 @@ import { ReactMyFormComponent } from './test/react-my-form/react-my-form.compone
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { PlayWithFirebaseComponent } from './test/play-with-firebase/play-with-firebase.component';
 import { AddcustomerComponent } from './dashboard/addcustomer/addcustomer.component';
-import { SpinnerComponent } from './main-components/spinner/spinner.component';
+import { SpinnerComponent } from './main-components/alertsAndSpinners/spinner/spinner.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
