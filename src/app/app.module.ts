@@ -22,6 +22,7 @@ import { SpinnerComponent } from './main-components/alertsAndSpinners/spinner/sp
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomersComponent } from './dashboard/customers/customers.component';
 import { CommonModule } from '@angular/common';
+import { ShowCustomerComponent } from './dashboard/customers/show-customer/show-customer.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
         {
           path: 'customers',
           component: CustomersComponent, // another child route component that the router renders
+        },
+        {
+          path: 'customers/:id',
+          component: AddcustomerComponent, // another child route component that the router renders
         },
       ], },
   { path: 'playFB', component: PlayWithFirebaseComponent,canActivate: [AuthGuard] }
@@ -56,7 +61,8 @@ const routes: Routes = [
     PlayWithFirebaseComponent,
     AddcustomerComponent,
     SpinnerComponent,
-    CustomersComponent
+    CustomersComponent,
+    ShowCustomerComponent
   ],
   imports: [
     BrowserModule,

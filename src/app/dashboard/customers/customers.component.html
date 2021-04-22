@@ -1,4 +1,15 @@
 <h2>Customers</h2>
+
+<div class="input-group mb-2">
+    <input (input)="searchChanged($event.target.value)" type="text" class="form-control bg-light border small shadow" placeholder="Search for..."
+        aria-label="Search" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+        <button class="btn btn-primary" type="button">
+            <i class="fas fa-search fa-sm"></i>
+        </button>
+    </div>
+</div>
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -7,16 +18,17 @@
       <th scope="col">Last</th>
       <th scope="col">Email</th>
       <th scope="col">Phone Number</th>
-      <th scope="col">Email</th>
-      <th scope="col">Email</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of customers">
-      <th scope="row">1</th>
+    <tr class="pointer" *ngFor="let item of customers; let i = index" (click)="showCustomer(item)">
+      <th scope="row">{{i+1}}</th>
       <td>{{item.firstName}}</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>{{item.lastName}}</td>
+      <td>{{item.email}}</td>
+      <td>{{item.phoneNumber}}</td>
+      <td (click)="remove($event,item)"> <i class="fas fa-user-times"></i></td>
     </tr>
 
 </table>

@@ -15,19 +15,44 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 
 export class AddcustomerComponent implements OnInit {
    
-  constructor(private ds:DbServiceService,private spinner:SpinnerService,private route: ActivatedRoute,private router: Router) {
+  constructor(private ds:DbServiceService,private spinner:SpinnerService,
+    private route: ActivatedRoute, private spinnerService:SpinnerService) {
    }
 
    form:Customer=new Customer()
- 
+   id: string;
+   private sub: any;
+   customer:Customer
+   addOrEditCustomer:string="Add customer"
 
   ngOnInit(): void {
-    console.log(this.form)
+    this.sub = this.route.params.subscribe(params => {
+     
+      if (params['id']){
+        this.id = params['id'];
+        this.getCustomer(this.id)
+      }
+  
+   });
+
   }
 
+  async getCustomer(id: string){
+
+    try {
+      this.spinnerService.showOrHideSpinner(true)
+      const customer = await  this.ds.getCustomer(id)
+      this.spinnerService.showOrHideSpinner(false)
+      if (customer){
+        this.form = customer
+        this.addOrEditCustomer="Edit customer"
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   save(){
-    console.log(this.form)
     this.spinner.showOrHideSpinner(true)
     this.ds.addCustomer(this.form).then((docRef) => {
       this.spinner.showOrHideSpinner(false)
@@ -39,4 +64,9 @@ export class AddcustomerComponent implements OnInit {
         console.error("Error adding document: ", error);
     });
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
 }

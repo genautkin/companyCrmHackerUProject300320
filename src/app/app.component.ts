@@ -1,6 +1,4 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { LoginService } from './services/login.service';
 import { SpinnerService } from './services/spinner.service';
 
 @Component({

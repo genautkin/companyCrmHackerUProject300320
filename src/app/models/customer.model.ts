@@ -20,7 +20,7 @@ export class Customer {
         }
     }
     constructor(
-    id:string='',
+    id:string="",
     firstName:string="",
     lastName:string="",
     email:string="",
@@ -37,6 +37,19 @@ export class Customer {
 
     }
 
+    checkIfEmpty(){
+        if (
+            this.firstName=="" ||
+            this.lastName=="" || 
+            this.email=="" ||
+            this.phoneNumber=="" ||
+            this.address==""
+           
+        ){
+            return true
+        }
+        return false
+    }
     fromFirestore(doc):Customer{
    
         return new Customer(doc.id,
