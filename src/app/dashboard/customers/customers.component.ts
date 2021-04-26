@@ -22,8 +22,8 @@ export class CustomersComponent implements AfterContentInit {
     this.getAllCustomers()
   }
 
+  customersArrayData: Customer[] =[]
   customers: Customer[] =[]
-
   ngOnInit(): void {
     
   }
@@ -35,12 +35,8 @@ export class CustomersComponent implements AfterContentInit {
 
   searchChanged(str:string){
     str=str.toLowerCase()
-    const arr = this.customers.filter((elem)=> {
-      //return false for the element that matches both the name and the id
-      return (elem.firstName.toLowerCase().includes(str) || elem.lastName.toLowerCase().includes(str) || elem.email.toLowerCase().includes(str)
-       || elem.phoneNumber.toLowerCase().includes(str) || elem.address.toLowerCase().includes(str) || elem.notes.toLowerCase().includes(str))
-    });
-    this.customers=arr
+    this.customers=new Customer().searchInCustomersArray(this.customersArrayData,str)
+
   }
 
 
@@ -53,7 +49,8 @@ export class CustomersComponent implements AfterContentInit {
       console.log(err)
     })
     this.ds.customersStatus.subscribe((arr:Customer[])=>{
-      this.customers=arr
+      this.customersArrayData=arr
+      this.searchChanged('')
     })
   }
 

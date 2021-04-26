@@ -18,6 +18,7 @@
       <th scope="col">Last</th>
       <th scope="col">Email</th>
       <th scope="col">Phone Number</th>
+      <th scope="col">Created</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -28,6 +29,7 @@
       <td>{{item.lastName}}</td>
       <td>{{item.email}}</td>
       <td>{{item.phoneNumber}}</td>
+      <td>{{item.timestamp | timeStampToDateWithTime}}</td>
       <td (click)="remove($event,item)"> <i class="fas fa-user-times"></i></td>
     </tr>
 

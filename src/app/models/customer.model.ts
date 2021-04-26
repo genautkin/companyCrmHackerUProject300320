@@ -8,6 +8,8 @@ export class Customer {
     address:string=""
     notes:string=""
     private _id:string=""
+    timestamp:number=new Date().getTime()
+
     toFirestore():any{
         return {
             firstName:this.firstName,
@@ -16,7 +18,8 @@ export class Customer {
             phoneNumber:this.phoneNumber,
             address:this.address,
             notes:this.notes,
-            id:this._id
+            id:this._id,
+            timestamp:this.timestamp
         }
     }
     constructor(
@@ -26,15 +29,25 @@ export class Customer {
     email:string="",
     phoneNumber:string="",
     address:string="",
-    notes:string=""){
+    notes:string="",
+    timestamp:number=0){
         this.id=id;
         this.firstName=firstName;
         this.lastName=lastName;
         this.email=email;
         this.phoneNumber=phoneNumber;
         this.address=address;
-        this.notes=notes
+        this.notes=notes;
+        this.timestamp=timestamp;
 
+    }
+
+    searchInCustomersArray(customers:Customer[],str:string){
+        return customers.filter((elem)=> {
+            //return false for the element that matches both the name and the id
+            return (elem.firstName.toLowerCase().includes(str) || elem.lastName.toLowerCase().includes(str) || elem.email.toLowerCase().includes(str)
+             || elem.phoneNumber.toLowerCase().includes(str) || elem.address.toLowerCase().includes(str) || elem.notes.toLowerCase().includes(str))
+          });
     }
 
     checkIfEmpty(){
@@ -51,14 +64,19 @@ export class Customer {
         return false
     }
     fromFirestore(doc):Customer{
-   
+         //var timestamp=0
+        // if (doc.data().timestamp) {
+        //     timestamp=doc.data().timestamp
+        // }
+      //  doc.data().timestamp ? timestamp= doc.data().timestamp : null
         return new Customer(doc.id,
             doc.data().firstName,
             doc.data().lastName,
             doc.data().email,
             doc.data().phoneNumber,
             doc.data().address,
-            doc.data().notes
+            doc.data().notes,
+            doc.data().timestamp ? doc.data().timestamp : new Date().getTime()
             )
     }
 

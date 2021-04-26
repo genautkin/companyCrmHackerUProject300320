@@ -23,6 +23,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CustomersComponent } from './dashboard/customers/customers.component';
 import { CommonModule } from '@angular/common';
 import { ShowCustomerComponent } from './dashboard/customers/show-customer/show-customer.component';
+import { TimeStampToDatePipe } from './pipes/time-stamp-to-date.pipe';
+import { TimeStampToDateWithTimePipe } from './pipes/time-stamp-to-date-with-time.pipe';
 
 
 const routes: Routes = [
@@ -62,7 +64,9 @@ const routes: Routes = [
     AddcustomerComponent,
     SpinnerComponent,
     CustomersComponent,
-    ShowCustomerComponent
+    ShowCustomerComponent,
+    TimeStampToDatePipe,
+    TimeStampToDateWithTimePipe
   ],
   imports: [
     BrowserModule,
